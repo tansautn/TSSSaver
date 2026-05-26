@@ -17,9 +17,12 @@
 	$db['password'] = "password";
 	$db['table'] = "devices";
 	
-	$signedVersionsURL = "https://api.ipsw.me/v2.1/firmwares.json/condensed"; 
-	
-	
+	$signedVersionsURL = "https://api.ipsw.me/v2.1/firmwares.json/condensed";
+
+	// Superuser password for the admin panel (admin.php).
+	// Change this before deploying. An empty string disables admin access.
+	$suPassword = "changeme";
+
 	$apnonce = array(
 		'603be133ff0bdfa0f83f21e74191cf6770ea43bb', 
 		'352dfad1713834f4f94c5ff3c3e5e99477347b95', 
