@@ -184,30 +184,7 @@
 					<option value="iPad">iPad</option>
 					<option value="AppleTV">AppleTV</option>
 				</select>
-				<select id="deviceModel" name="deviceModel">
-					<option value="0">iPhone 2G</option>
-					<option value="1">iPhone 3G</option>
-					<option value="2">iPhone 3G[S]</option>
-					<option value="3">iPhone 4 (GSM)</option>
-					<option value="4">iPhone 4 (GSM 2012)</option>
-					<option value="5">iPhone 4 (CDMA)</option>
-					<option value="6">iPhone 4[S]</option>
-					<option value="7">iPhone 5 (GSM)</option>
-					<option value="8">iPhone 5 (Global)</option>
-					<option value="9">iPhone 5c (GSM)</option>
-					<option value="10">iPhone 5c (Global)</option>
-					<option value="11">iPhone 5s (GSM)</option>
-					<option value="12">iPhone 5s (Global)</option>
-					<option value="13">iPhone 6+</option>
-					<option value="14">iPhone 6</option>
-					<option value="15">iPhone 6s</option>
-					<option value="16">iPhone 6s+</option>
-					<option value="17">iPhone SE</option>
-					<option value="18">iPhone 7 (Global)</option>
-					<option value="19">iPhone 7 Plus (Global)</option>
-					<option value="20">iPhone 7 (GSM)</option>
-					<option value="21">iPhone 7 Plus (GSM)</option>
-				</select>
+				<select id="deviceModel" name="deviceModel"></select>
 				<br><br>
 				<?php 
 					if($reCaptcha['enabled'] == true) {
@@ -272,23 +249,23 @@
 						window.location = serverURL + "shsh/" + inp_ecid;
 					}
 				};
-				document.getElementById('deviceType').onchange = function() {
-					var deviceType = document.getElementById('deviceType');
-                    var deviceModel = document.getElementById('deviceModel');
-					var modelList = getJSON(serverURL + "json/" + deviceType.value + ".json");
-                    while(deviceModel.hasChildNodes()){
-                        deviceModel.removeChild(deviceModel.lastChild);
-                    }
-                    for(var i = 0; i < modelList.length; i++) {
-                        console.log(i);
-                        var child = document.createElement('option');
-                        var text = document.createTextNode(modelList[i]);
-                        child.setAttribute('value', i);
-                        child.appendChild(text);
-                        deviceModel.appendChild(child);
-                    }
-					
-				}
+				function populateModels(type) {
+						var deviceModel = document.getElementById('deviceModel');
+						var modelList = getJSON(serverURL + "json/" + type + ".json");
+						while (deviceModel.hasChildNodes()) {
+							deviceModel.removeChild(deviceModel.lastChild);
+						}
+						for (var i = 0; i < modelList.length; i++) {
+							var child = document.createElement('option');
+							child.setAttribute('value', i);
+							child.appendChild(document.createTextNode(modelList[i]));
+							deviceModel.appendChild(child);
+						}
+					}
+					document.getElementById('deviceType').onchange = function() {
+						populateModels(this.value);
+					};
+					populateModels(document.getElementById('deviceType').value);
 		</script>
 		<?php 
 			if($reCaptcha['enabled'] == true) {
